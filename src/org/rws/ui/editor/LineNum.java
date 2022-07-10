@@ -1,31 +1,37 @@
 package org.rws.ui.editor;
 
 import org.rws.global.ui.EdTheme;
+import org.rws.global.ui.WindData;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.*;
 
-public class TEditor extends JPanel implements ComponentListener {
+public class LineNum extends JPanel implements ComponentListener {
 
-    LineNum ln;
+    private int num;
 
-    public TEditor(File file) throws IOException {
+    public LineNum(int n) {
         super();
         setLayout(null);
         addComponentListener(this);
-        LineNumberReader lnr = new LineNumberReader(new FileReader(file));
-        ln = new LineNum(lnr.getLineNumber());
-        lnr.close();
-        ln.setLocation(0, 0);
-        setBackground(EdTheme.BACKGROUND);
-        add(ln);
+        num = n;
+        setBackground(EdTheme.LN_BAR);
+        setSize(EdTheme.DEFAULT_LN_BAR_WID, WindData.DEFAULT_SIZE.height);
+    }
+
+    public void setNum(int n) {
+        num = n;
+    }
+
+    public int getNum() {
+        return num;
     }
 
     @Override
     public void componentResized(ComponentEvent componentEvent) {
-        ln.setSize(ln.getWidth(), getHeight());
+        setSize(EdTheme.DEFAULT_LN_BAR_WID, getHeight());
     }
 
     @Override
